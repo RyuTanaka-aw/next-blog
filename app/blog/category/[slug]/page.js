@@ -35,14 +35,14 @@ export default async function Category({ params }) {
   )
 }
 
-export const dynamicParams = false
-export async function generateStaticParams() {
-  const allCats = await getAllCategories()
+// export const dynamicParams = false
+// export async function generateStaticParams() {
+//   const allCats = await getAllCategories()
 
-  return allCats.map(({slug}) => {
-    return { slug: slug }
-  })
-}
+//   return allCats.map(({slug}) => {
+//     return { slug: slug }
+//   })
+// }
 
 // メタデータ
 export async function generateMetadata({params}) {

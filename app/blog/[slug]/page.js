@@ -20,6 +20,7 @@ const { siteTitle, siteUrl } = siteMeta
 
 // ベースのメタデータ
 import { openGraphMetadata, twitterMetadata } from "lib/baseMetadata";
+import { notFound } from "next/navigation";
 
 export default async function Post({ params }) {
   const slug = params.slug
@@ -79,14 +80,14 @@ export default async function Post({ params }) {
   )
 }
 
-export const dynamicParams = false
-export async function generateStaticParams() {
-  const allSlugs = await getAllSlugs();
+// export const dynamicParams = false
+// export async function generateStaticParams() {
+//   const allSlugs = await getAllSlugs();
 
-  return allSlugs.map(({slug}) => {
-    return { slug: slug }
-  })
-}
+//   return allSlugs.map(({slug}) => {
+//     return { slug: slug }
+//   })
+// }
 
 // メタデータ
 export async function generateMetadata({ params }) {
