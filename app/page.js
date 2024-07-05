@@ -8,6 +8,8 @@ import { getPlaiceholder } from 'plaiceholder'
 // ローカルの代替アイキャッチ画像
 import { eyecatchLocal } from 'lib/constants'
 
+export const revalidate = 0;
+
 export default async function Home() {
   const posts = await getAllPosts(4)
 
