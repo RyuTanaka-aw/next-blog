@@ -10,13 +10,14 @@ import { TwoColumn, TwoColumnMain, TwoColumnSidebar } from 'components/two-colum
 import ConvertBody from "components/convert-body";
 import PostCategories from "components/post-categories";
 import Image from "next/image";
+import { Suspense } from 'react';
 
 // ローカルの代替アイキャッチ画像
 import { eyecatchLocal } from "lib/constants";
 import { Kings } from 'next/font/google';
 
 
-export default function Post() {
+export function Post() {
   const [postData, setPostData] = useState(null)
 
   const searchParams = useSearchParams()
@@ -70,5 +71,13 @@ export default function Post() {
         </TwoColumn>
       </article>
     </Container>
+  )
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Post />
+    </Suspense>
   )
 }
