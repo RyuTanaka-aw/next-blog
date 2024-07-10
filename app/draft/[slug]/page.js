@@ -1,7 +1,3 @@
-'use client'
-
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation'
 import { extractText } from "lib/extract-text";
 import Container from "components/container";
 import PostHeader from "components/post-header";
@@ -17,25 +13,12 @@ import { eyecatchLocal } from "lib/constants";
 import { Kings } from 'next/font/google';
 
 
-export function Post() {
-  const [postData, setPostData] = useState(null)
+export default async function Post({ params, searchParams }) {
 
-  const searchParams = useSearchParams()
+  const contentId = params.slug;
+  const draftKey = searchParams.draftKey;
 
-  const contentId = searchParams.get('id');
-  const draftKey = searchParams.get('draftKey');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const post = await fetch(`https://${process.env.NEXT_PUBLIC_SERVICE_DOMAIN}.microcms.io/api/v1/blogs/${contentId}?draftKey=${draftKey}`, {headers: { 'X-MICROCMS-API-KEY': process.env.NEXT_PUBLIC_API_KEY }}).then(res => res.json())
-      setPostData(post)
-    }
-    fetchData()
-  }, [contentId, draftKey])
-
-  if (!postData) {
-    return <p>Loading...</p>;
-  }
+  const postData = await fetch(`https://${process.env.SERVICE_DOMAIN}.microcms.io/api/v1/blogs/${contentId}?draftKey=${draftKey}`, {headers: { 'X-MICROCMS-API-KEY': process.env.API_KEY }}).then(res => res.json())
   
   const { title, publishDate: publish, content, categories } = postData
 
@@ -71,13 +54,5 @@ export function Post() {
         </TwoColumn>
       </article>
     </Container>
-  )
-}
-
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Post />
-    </Suspense>
   )
 }
